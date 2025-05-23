@@ -107,8 +107,13 @@ abstract class BasePlugin implements Plugin
 
     protected function namespace(string $subNamespace): string
     {
-        return static::class
-            ? rtrim(str_replace('Plugins\\' . class_basename(static::class), '', static::class), '\\') . '\\' . $subNamespace
-            : '';
+        $reflector = new ReflectionClass(static::class);
+        $baseNamespace = $reflector->getNamespaceName();
+
+        if (str_ends_with($baseNamespace, '\\Plugins')) {
+            $baseNamespace = substr($baseNamespace, 0, -strlen('\\Plugins'));
+        }
+
+        return $baseNamespace . '\\' . $subNamespace;
     }
 }

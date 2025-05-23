@@ -8,11 +8,13 @@ composer.lock
 # Logs
 npm-debug.log
 yarn-error.log
+logs
 
 # Caches
 .phpunit.cache
 .phpunit.result.cache
 /build
+*.cache
 
 # IDE Helper
 _ide_helper.php

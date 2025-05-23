@@ -19,7 +19,6 @@ class SharedInstallerCommand extends Command
             ['tag' => 'shared-config'],
             ['tag' => 'shared-assets'],
             ['tag' => 'shared-migrations'],
-            ['tag' => 'shared-scripts'],
         ], $this->option('force'));
 
         // Publish external (vendor) dependencies like activitylog

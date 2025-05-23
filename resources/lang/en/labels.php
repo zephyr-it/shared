@@ -1,10 +1,7 @@
 <?php
 
 return [
-    'active' => 'Active',
     'add' => 'Add',
-    'blacklisted_at' => 'Blacklisted At',
-    'blocked_url' => 'Blocked Url',
     'capital' => 'Capital',
     'country' => 'Country',
     'country_code' => 'Country Code',
@@ -17,8 +14,6 @@ return [
     'date_range' => 'Date Range',
     'emoji' => 'Emoji',
     'emojiU' => 'EmojiU',
-    'expired' => 'Expired',
-    'expires_at' => 'Expires At',
     'fieldset' => [
         'general_information' => 'Fieldset General Information',
         'geographical_information' => 'Fieldset Geographical Information',
@@ -30,7 +25,6 @@ return [
     ],
     'fips_code' => 'Fips Code',
     'flag' => 'Flag',
-    'ip_address' => 'Ip Address',
     'iso2' => 'Iso2',
     'iso3' => 'Iso3',
     'latitude' => 'Latitude',
@@ -40,15 +34,12 @@ return [
     'native' => 'Native',
     'numeric_code' => 'Numeric Code',
     'phonecode' => 'Phonecode',
-    'reason' => 'Reason',
     'region' => 'Region',
     'region_id' => 'Region Id',
     'state' => 'State',
     'state_code' => 'State Code',
-    'status' => 'Status',
     'subregion' => 'Subregion',
     'subregion_id' => 'Subregion Id',
-    'tenant' => 'Tenant',
     'timezones' => 'Timezones',
     'tld' => 'Tld',
     'translations' => 'Translations',

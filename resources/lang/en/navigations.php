@@ -2,15 +2,13 @@
 
 return [
     'groups' => [
-        'masters' => 'Groups Masters',
-        'firewall' => 'Groups Firewall',
-        'reports' => 'Groups Reports',
+        'masters' => 'Masters',
+        'firewall' => 'Firewall',
+        'reports' => 'Reports',
     ],
     'labels' => [
-        'cities' => 'Labels Cities',
-        'countries' => 'Labels Countries',
-        'blacklisted_ips' => 'Labels Blacklisted Ips',
-        'whitelisted_ips' => 'Labels Whitelisted Ips',
-        'states' => 'Labels States',
+        'cities' => 'Cities',
+        'countries' => 'Countries',
+        'states' => 'States',
     ],
 ];

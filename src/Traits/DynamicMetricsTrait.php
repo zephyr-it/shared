@@ -21,7 +21,6 @@ trait DynamicMetricsTrait
         ?Closure $additionalFilters = null,
         string | Closure | null $groupByColumn = null,
         string $dateColumn = 'created_at',
-        array $relations = []
     ): Collection {
         [$startDate, $endDate] = $this->prepareDateRange($startDate, $endDate);
         $interval = $this->determineDateInterval($startDate, $endDate);
