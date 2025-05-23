@@ -54,7 +54,11 @@ class SharedServiceProvider extends PackageServiceProvider
      */
     private function getCommands(): array
     {
-        return [];
+        return [
+            Commands\SharedInstallerCommand::class,
+            Commands\Scheduling\Central\CleanupActivityLogCommand::class,
+            Commands\Scheduling\Tenant\CleanupActivityLogCommand::class,
+        ];
     }
 
     /**
@@ -72,7 +76,13 @@ class SharedServiceProvider extends PackageServiceProvider
         $this->app->booted(function () {
             $schedule = $this->app->make(Schedule::class);
 
-            // $schedule->command('shared:seed-countries')->everyMinute();
+            // 🌐 Central-only cleanup
+            $schedule->command('toolkit:schedule:central:cleanup-activity-log')->dailyAt('00:10');
+
+            // 🏢 Multi-tenant cleanup
+            if (function_exists('tenant')) {
+                $schedule->command('toolkit:schedule:tenant:cleanup-activity-log')->dailyAt('01:00');
+            }
         });
     }
 }

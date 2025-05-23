@@ -130,7 +130,7 @@ function mergeLangArray($existing, $new)
 
 // === Script starts ===
 
-$baseDir = realpath($argv[1] ?? getcwd()); // assumes /scripts/check-lang-fixed.php
+$baseDir = dirname(__DIR__); // assumes /scripts/check-lang-fixed.php
 $package = $argv[1] ?? basename($baseDir);
 
 echo "🔍 Checking language keys for package: {$package}
@@ -141,8 +141,7 @@ $srcPaths = [
     "{$baseDir}/resources/views",
 ];
 
-$langLocale = 'en';
-$langDir = "{$baseDir}/resources/lang/{$langLocale}";
+$langDir = "{$baseDir}/resources/lang/en";
 if (! is_dir($langDir)) {
     mkdir($langDir, 0755, true);
 }

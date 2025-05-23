@@ -4,6 +4,7 @@ return [
     'groups' => [
         'masters' => 'Groups Masters',
         'firewall' => 'Groups Firewall',
+        'reports' => 'Groups Reports',
     ],
     'labels' => [
         'cities' => 'Labels Cities',

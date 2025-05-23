@@ -14,6 +14,7 @@ return [
         'name' => 'Currency Name',
         'symbol' => 'Currency Symbol',
     ],
+    'date_range' => 'Date Range',
     'emoji' => 'Emoji',
     'emojiU' => 'EmojiU',
     'expired' => 'Expired',
