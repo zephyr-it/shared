@@ -1,12 +1,12 @@
 <?php
 
-namespace VendorName\Skeleton\Commands;
+namespace ZephyrIt\Shared\Commands;
 
 use Illuminate\Console\Command;
 
-class SkeletonCommand extends Command
+class SharedCommand extends Command
 {
-    public $signature = 'skeleton';
+    public $signature = 'shared';
 
     public $description = 'My command';
 
