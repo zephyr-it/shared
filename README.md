@@ -1,84 +1,112 @@
-# Shared traits, report pages, and utilities for Zephyr-IT modular applications.
+# 🌐 Zephyr Shared Package
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/zephyr-it/shared.svg?style=flat-square)](https://packagist.org/packages/zephyr-it/shared)
 [![GitHub Tests Action Status](https://img.shields.io/github/actions/workflow/status/zephyr-it/shared/run-tests.yml?branch=main&label=tests&style=flat-square)](https://github.com/zephyr-it/shared/actions?query=workflow%3Arun-tests+branch%3Amain)
 [![GitHub Code Style Action Status](https://img.shields.io/github/actions/workflow/status/zephyr-it/shared/fix-php-code-style-issues.yml?branch=main&label=code%20style&style=flat-square)](https://github.com/zephyr-it/shared/actions?query=workflow%3A"Fix+PHP+code+style+issues"+branch%3Amain)
 [![Total Downloads](https://img.shields.io/packagist/dt/zephyr-it/shared.svg?style=flat-square)](https://packagist.org/packages/zephyr-it/shared)
 
-This is where your description should go. Limit it to a paragraph or two. Consider adding a small example.
+Shared traits, report pages, Filament plugins, utilities, and helpers used across all Zephyr-IT modular Laravel packages.
 
-## Support us
+This package provides:
 
-[<img src="https://github-ads.s3.eu-central-1.amazonaws.com/shared.jpg?t=1" width="419px" />](https://spatie.be/github-ad-click/shared)
+-   A reusable `BasePlugin` system for Filament v3 auto-registration
+-   Pre-built Filament resources (like Country, State, City)
+-   Report export base classes for Laravel Excel
+-   Language generation tooling (`scripts/check-lang.php`)
+-   Helpful traits, support classes, and helpers
 
-We invest a lot of resources into creating [best in class open source packages](https://spatie.be/open-source). You can support us by [buying one of our paid products](https://spatie.be/open-source/support-us).
+---
 
-We highly appreciate you sending us a postcard from your hometown, mentioning which of our package(s) you are using. You'll find our address on [our contact page](https://spatie.be/about-us). We publish all received postcards on [our virtual postcard wall](https://spatie.be/open-source/postcards).
+## 📦 Installation
 
-## Installation
-
-You can install the package via composer:
+Install via Composer:
 
 ```bash
 composer require zephyr-it/shared
 ```
 
-You can publish and run the migrations with:
-
-```bash
-php artisan vendor:publish --tag="shared-migrations"
-php artisan migrate
-```
-
-You can publish the config file with:
+Optional publishable assets:
 
 ```bash
 php artisan vendor:publish --tag="shared-config"
-```
-
-This is the contents of the published config file:
-
-```php
-return [
-];
-```
-
-Optionally, you can publish the views using
-
-```bash
+php artisan vendor:publish --tag="shared-migrations"
 php artisan vendor:publish --tag="shared-views"
 ```
 
-## Usage
+---
+
+## 🧪 Usage
+
+### ✳️ Registering the Filament Plugin
 
 ```php
-$shared = new ZephyrIt\Shared();
-echo $shared->echoPhrase('Hello, ZephyrIt!');
+use ZephyrIt\Shared\Filament\SharedPlugin;
+
+Filament::plugin(SharedPlugin::make());
 ```
 
-## Testing
+### 🛠 Running the Language Key Generator
+
+From any Zephyr module:
+
+```bash
+composer lang:check
+```
+
+This will scan `src` and `resources/views` for translation keys and auto-generate structured language files.
+
+---
+
+## 🧬 Example Resources Included
+
+This package ships with fully functional Filament resources:
+
+-   `CountryResource`
+-   `StateResource`
+-   `CityResource`
+
+These can be extended or used as-is in any Zephyr-IT module.
+
+---
+
+## 🧪 Testing
 
 ```bash
 composer test
 ```
 
-## Changelog
+---
 
-Please see [CHANGELOG](CHANGELOG.md) for more information on what has changed recently.
+## 📄 Changelog
 
-## Contributing
+Please see [CHANGELOG](CHANGELOG.md) for details.
+
+---
+
+## 🤝 Contributing
 
 Please see [CONTRIBUTING](CONTRIBUTING.md) for details.
 
-## Security Vulnerabilities
+---
 
-Please review [our security policy](../../security/policy) on how to report security vulnerabilities.
+## 🔐 Security
 
-## Credits
+See [our security policy](../../security/policy).
 
--   [zephyr-it](https://github.com/zephyr-it)
+---
+
+## 🧠 Credits
+
+-   [abbasmashaddy72](https://github.com/abbasmashaddy72)
+-   [Zephyr-IT Team](https://github.com/zephyr-it)
 -   [All Contributors](../../contributors)
 
-## License
+---
 
-The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
+## 📜 License
+
+The MIT License (MIT). See [LICENSE.md](LICENSE.md) for more.
+
+```
+
+```

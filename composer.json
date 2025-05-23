@@ -17,18 +17,28 @@
     ],
     "require": {
         "php": "^8.4",
-        "spatie/laravel-package-tools": "^1.16",
-        "illuminate/contracts": "^10.0||^11.0||^12.0"
+        "illuminate/contracts": "^10.0||^11.0||^12.0",
+        "malzariey/filament-daterangepicker-filter": "^3.4",
+        "spatie/laravel-activitylog": "^4.10",
+        "spatie/laravel-package-tools": "^1.16"
     },
     "require-dev": {
+        "bezhansalleh/filament-shield": "^3.3",
+        "filament/filament": "^3.3",
+        "friendsofphp/php-cs-fixer": "^3.75",
         "laravel/pint": "^1.14",
+        "maatwebsite/excel": "^3.1",
         "nunomaduro/collision": "^8.1.1||^7.10.0",
         "orchestra/testbench": "^10.0.0||^9.0.0||^8.22.0",
         "pestphp/pest": "^3.0",
         "pestphp/pest-plugin-arch": "^3.0",
-        "pestphp/pest-plugin-laravel": "^3.0"
+        "pestphp/pest-plugin-laravel": "^3.0",
+        "stancl/tenancy": "^3.9"
     },
     "autoload": {
+        "files": [
+            "src/Helpers/bootstrap_helpers.php"
+        ],
         "psr-4": {
             "ZephyrIt\\Shared\\": "src/",
             "ZephyrIt\\Shared\\Database\\Factories\\": "database/factories/"
@@ -46,7 +56,11 @@
         "analyse": "vendor/bin/phpstan analyse",
         "test": "vendor/bin/pest",
         "test-coverage": "vendor/bin/pest --coverage",
-        "format": "vendor/bin/pint"
+        "format": "vendor/bin/pint",
+        "check:psr4": "composer dump-autoload -o --strict-psr",
+        "lint": "PHP_CS_FIXER_IGNORE_ENV=1 php-cs-fixer fix && pint --preset psr12 && pint --preset laravel && pint",
+        "lang:check": "@php scripts/check-lang.php toolkit",
+        "lang:check:current": "@php vendor/zephyr-it/shared/scripts/check-lang-fixed.php"
     },
     "config": {
         "sort-packages": true,

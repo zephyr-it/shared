@@ -1,6 +1,5 @@
 <?php
 
-// config for ZephyrIt/Shared
 return [
-
+    'default_country' => env('DEFAULT_COUNTRY', 'India'),
 ];
