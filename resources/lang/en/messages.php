@@ -1,5 +1,5 @@
 <?php
 
 return [
-    'copied' => 'Copied',
+    'copied' => 'Copied to clipboard',
 ];
