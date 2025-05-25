@@ -7,6 +7,10 @@
         "shared"
     ],
     "homepage": "https://github.com/zephyr-it/shared",
+    "support": {
+        "issues": "https://github.com/zephyr-it/toolkit/issues",
+        "source": "https://github.com/zephyr-it/toolkit"
+    },
     "license": "MIT",
     "authors": [
         {
@@ -25,7 +29,8 @@
         "malzariey/filament-daterangepicker-filter": "^3.4",
         "secondnetwork/blade-tabler-icons": "^3.33",
         "spatie/laravel-activitylog": "^4.10",
-        "spatie/laravel-package-tools": "^1.16"
+        "spatie/laravel-package-tools": "^1.16",
+        "ysfkaya/filament-phone-input": "^3.1"
     },
     "require-dev": {
         "bezhansalleh/filament-shield": "^3.3",
