@@ -52,7 +52,7 @@
         ],
         "psr-4": {
             "ZephyrIt\\Shared\\": "src/",
-            "ZephyrIt\\Shared\\Database\\Factories\\": "database/factories/"
+            "ZephyrIt\\Shared\\Database\\": "database/"
         }
     },
     "autoload-dev": {
