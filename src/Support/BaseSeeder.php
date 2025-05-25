@@ -55,8 +55,8 @@ abstract class BaseSeeder extends Seeder
      */
     protected function hasSeeded(string $seeder): bool
     {
-        return Schema::hasTable('seed_log') &&
-               DB::table('seed_log')->where('seeder', $seeder)->exists();
+        return Schema::hasTable('seeder_log') &&
+               DB::table('seeder_log')->where('seeder', $seeder)->exists();
     }
 
     /**
@@ -64,7 +64,7 @@ abstract class BaseSeeder extends Seeder
      */
     protected function logSeeder(string $seeder): void
     {
-        DB::table('seed_log')->insertOrIgnore([
+        DB::table('seeder_log')->insertOrIgnore([
             'seeder' => $seeder,
             'created_at' => now(),
             'updated_at' => now(),
