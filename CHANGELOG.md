@@ -2,6 +2,10 @@
 
 All notable changes to `shared` will be documented in this file.
 
+## v2.1.1 - 2025-05-25
+
+**Full Changelog**: https://github.com/zephyr-it/shared/compare/v2.1.0...v2.1.1
+
 ## v2.1.0 - 2025-05-25
 
 **Full Changelog**: https://github.com/zephyr-it/shared/compare/v2.0.1...v2.1.0
