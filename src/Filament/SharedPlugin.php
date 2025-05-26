@@ -11,7 +11,7 @@ class SharedPlugin extends BasePlugin
 {
     public function getId(): string
     {
-        return 'shared';
+        return 'shared-plugin';
     }
 
     protected function navigationGroups(): array
