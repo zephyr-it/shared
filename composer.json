@@ -68,7 +68,8 @@
         "test-coverage": "vendor/bin/pest --coverage",
         "check:psr4": "composer dump-autoload -o --strict-psr",
         "lint": "PHP_CS_FIXER_IGNORE_ENV=1 php-cs-fixer fix && pint --preset psr12 && pint --preset laravel && pint",
-        "lang:check": "@php scripts/check-lang.php toolkit"
+        "lang:check": "@php scripts/check-lang.php toolkit",
+        "generate:policies": "@php scripts/generate-policies.php"
     },
     "config": {
         "sort-packages": true,

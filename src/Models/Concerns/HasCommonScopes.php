@@ -2,6 +2,7 @@
 
 namespace ZephyrIt\Shared\Models\Concerns;
 
+use BackedEnum;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Schema;
 
@@ -48,7 +49,7 @@ trait HasCommonScopes
     /**
      * Scope: where status = value.
      */
-    public function scopeWhereStatus(Builder $query, string $status): Builder
+    public function scopeWhereStatus(Builder $query, string | BackedEnum $status): Builder
     {
         return $this->hasColumn($query, 'status')
             ? $query->where($query->getModel()->getTable() . '.status', $status)
@@ -95,5 +96,19 @@ trait HasCommonScopes
         return $this->hasColumn($query, $column)
             ? $query->where($query->getModel()->getTable() . '.' . $column, 'like', '%' . $term . '%')
             : $query;
+    }
+
+    /**
+     * Scope: search multiple columns using LIKE %term%.
+     */
+    public function scopeSearchColumns(Builder $query, array $columns, string $term): Builder
+    {
+        return $query->where(function ($q) use ($columns, $term) {
+            foreach ($columns as $column) {
+                if ($this->hasColumn($q, $column)) {
+                    $q->orWhere($q->getModel()->getTable() . '.' . $column, 'like', '%' . $term . '%');
+                }
+            }
+        });
     }
 }

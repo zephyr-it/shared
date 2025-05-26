@@ -55,7 +55,7 @@ class SharedServiceProvider extends PackageServiceProvider
     private function getCommands(): array
     {
         return [
-            Commands\SharedInstallerCommand::class,
+            Commands\SharedCommand::class,
             Commands\Scheduling\Central\CleanupActivityLogCommand::class,
             Commands\Scheduling\Tenant\CleanupActivityLogCommand::class,
         ];

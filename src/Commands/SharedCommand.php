@@ -4,7 +4,7 @@ namespace ZephyrIt\Shared\Commands;
 
 use Illuminate\Console\Command;
 
-class SharedInstallerCommand extends Command
+class SharedCommand extends Command
 {
     protected $signature = 'shared:install {--force : Overwrite existing files without confirmation}';
 

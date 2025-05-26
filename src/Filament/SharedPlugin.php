@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace ZephyrIt\Shared\Filament;
 
 use Filament\Navigation\NavigationGroup;
-use ZephyrIt\Shared\FilamentBase\Plugins\BasePlugin;
+use ZephyrIt\FilamentCustomizer\Base\Plugins\BasePlugin;
 
 class SharedPlugin extends BasePlugin
 {
