@@ -18,11 +18,6 @@ class SharedPlugin extends BasePlugin
     {
         return [
             NavigationGroup::make()
-                ->label(fn (): string => __('shared::navigations.groups.firewall'))
-                ->icon('tabler-shield-lock')
-                ->collapsed(),
-
-            NavigationGroup::make()
                 ->label(fn (): string => __('shared::navigations.groups.masters'))
                 ->icon('tabler-database')
                 ->collapsed(),
