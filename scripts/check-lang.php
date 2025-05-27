@@ -49,6 +49,17 @@ function arrayToString(array $array, int $level = 1): string
 
     return $output;
 }
+
+function recursiveKsort(array &$array): void
+{
+    ksort($array);
+    foreach ($array as &$value) {
+        if (is_array($value)) {
+            recursiveKsort($value);
+        }
+    }
+}
+
 function getTranslationKeysFromFile($content)
 {
     $patterns = [
@@ -106,7 +117,7 @@ function recursiveScanForKeys($paths)
 
 function saveLangFile($filePath, array $array)
 {
-    ksort($array);
+    recursiveKsort($array);
     $content = '<?php
 
 return [
