@@ -40,7 +40,7 @@ abstract class BasePolicy
 
     protected function getExpectedUserModel(): string
     {
-        $resolver = config('policy.user_model_resolver');
+        $resolver = config('shared.user_model_resolver');
 
         return is_callable($resolver)
             ? call_user_func($resolver)
