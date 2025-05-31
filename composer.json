@@ -30,7 +30,8 @@
         "secondnetwork/blade-tabler-icons": "^3.33",
         "spatie/laravel-activitylog": "^4.10",
         "spatie/laravel-package-tools": "^1.16",
-        "ysfkaya/filament-phone-input": "^3.1"
+        "ysfkaya/filament-phone-input": "^3.1",
+        "zephyr-it/filament-customizer": "dev-main"
     },
     "require-dev": {
         "bezhansalleh/filament-shield": "^3.3",
@@ -92,5 +93,11 @@
         "stancl/tenancy": "Enables tenant-aware support for central connections."
     },
     "minimum-stability": "dev",
-    "prefer-stable": true
+    "prefer-stable": true,
+    "repositories": {
+        "zephyr-it-filament-customizer": {
+            "type": "vcs",
+            "url": "https://github.com/zephyr-it/filament-customizer"
+        }
+    }
 }

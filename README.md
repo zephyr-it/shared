@@ -258,7 +258,7 @@ To build a plugin for your module (e.g., `Accounts`), extend `BasePlugin`:
 ```php
 namespace ZephyrIt\Accounts\Filament;
 
-use ZephyrIt\Shared\FilamentBase\Plugins\BasePlugin;
+use ZephyrIt\FilamentCustomizer\Base\Plugins\BasePlugin;
 use Filament\Navigation\NavigationGroup;
 
 class AccountsPlugin extends BasePlugin
