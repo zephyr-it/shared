@@ -35,15 +35,13 @@ function arrayToString(array $array, int $level = 1): string
     $output = '';
 
     foreach ($array as $key => $value) {
-        $output .= $indent . "'" . addslashes($key) . "' => ";
+        $output .= $indent . "'" . str_replace("'", "\\'", $key) . "' => ";
 
         if (is_array($value)) {
-            $output .= '[
-' . arrayToString($value, $level + 1) . $indent . '],
-';
+            $output .= '[' . PHP_EOL . arrayToString($value, $level + 1) . $indent . '],' . PHP_EOL;
         } else {
-            $output .= "'" . addslashes($value) . "',
-";
+            $escapedValue = str_replace("'", "\\'", $value);
+            $output .= "'" . $escapedValue . "'," . PHP_EOL;
         }
     }
 

@@ -2,8 +2,8 @@
 
 return [
     'groups' => [
-        'masters' => 'Masters',
         'firewall' => 'Firewall',
+        'masters' => 'Masters',
         'reports' => 'Reports',
     ],
     'labels' => [
