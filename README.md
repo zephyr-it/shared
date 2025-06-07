@@ -1100,13 +1100,22 @@ fn ($item) => [$item->created_at->format('Y-m'), $item->user_id]
 
 ## 🧪 Testing
 
-Run the full test suite using:
+Install PHP dependencies and run the test suite with [Pest](https://pestphp.com/):
 
 ```bash
+composer install
 composer test
 ```
 
-This ensures that all traits, resources, commands, and integrations function as expected across environments.
+The tests are configured via [`phpunit.xml.dist`](phpunit.xml.dist). This ensures that all traits, resources, commands, and integrations function as expected across environments.
+
+To verify coding standards, run the style fixer:
+
+```bash
+composer lint
+```
+
+This uses PHP CS Fixer and Laravel Pint to enforce consistent formatting.
 
 ---
 
