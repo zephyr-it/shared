@@ -15,6 +15,25 @@ It provides:
 -   A CLI script to check for missing language keys
 -   Centralized helpers, traits, and support classes for common functionality
 
+## 📑 Table of Contents
+
+- [Installation](#installation)
+- [Usage](#usage)
+- [Excel Report Exports](#excel-report-exports)
+- [Global Helper Functions](#global-helper-functions)
+- [Model Concerns](#model-concerns)
+- [UniqueEncryptedRule](#uniqueencryptedrule)
+- [Smart Seeding System with BaseSeeder](#smart-seeding-system-with-baseseeder)
+- [Useful Shared Traits](#useful-shared-traits)
+- [Dynamic Metrics Engine](#dynamic-metrics-engine)
+- [How to Use](#how-to-use)
+- [Helper Methods (Internal Use)](#helper-methods-internal-use)
+- [Testing](#testing)
+- [Changelog](#changelog)
+- [Contributing](#contributing)
+- [Security](#security)
+- [Credits](#credits)
+- [License](#license)
 ---
 
 ## 📦 Installation
