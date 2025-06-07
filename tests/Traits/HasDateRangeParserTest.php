@@ -32,3 +32,23 @@ test('throws exception for unsupported date format', function () {
     expect(fn () => $stub->parseDateRange('2024/01/01 - 2024/01/02'))
         ->toThrow(InvalidArgumentException::class);
 });
+
+test('parses carbon instances and returns strings', function () {
+    $stub = new DateRangeParserStub();
+    $start = Carbon::create(2024, 2, 1);
+    $end = Carbon::create(2024, 2, 10);
+
+    [$from, $to] = $stub->parseDateRangeAsStrings([$start, $end]);
+
+    expect($from)->toBe('2024-02-01')
+        ->and($to)->toBe('2024-02-10');
+});
+
+test('parses custom format string output', function () {
+    $stub = new DateRangeParserStub();
+
+    [$start, $end] = $stub->parseDateRangeAsStrings('01/03/2024 - 05/03/2024', 'd/m/Y');
+
+    expect($start)->toBe('01/03/2024')
+        ->and($end)->toBe('05/03/2024');
+});
