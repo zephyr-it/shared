@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace ZephyrIt\Shared\Helpers;
 
 use Carbon\Carbon;
-use Exception;
+use RuntimeException;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Facades\Redis;
 use Illuminate\Support\Str;
@@ -56,7 +56,7 @@ class GeneratorHelpers
             usleep($retryDelay);
         }
 
-        throw new Exception('Unable to generate unique number after maximum retries.');
+        throw new RuntimeException('Unable to generate unique number after maximum retries.');
     }
 
     /**

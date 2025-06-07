@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace ZephyrIt\Shared\Traits;
 
 use Carbon\Carbon;
-use Exception;
+use InvalidArgumentException;
 
 trait HasDateRangeParser
 {
@@ -19,7 +19,7 @@ trait HasDateRangeParser
         } elseif (is_string($dateFilter) && str_contains($dateFilter, ' - ')) {
             [$startDate, $endDate] = explode(' - ', $dateFilter);
         } else {
-            throw new Exception('Invalid date filter format.');
+            throw new InvalidArgumentException('The provided date range is invalid.');
         }
 
         return [
@@ -60,6 +60,6 @@ trait HasDateRangeParser
             return Carbon::createFromFormat('d/m/Y', $date);
         }
 
-        throw new Exception("Unsupported date format: {$date}");
+        throw new InvalidArgumentException("Unsupported date format: {$date}");
     }
 }
