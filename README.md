@@ -236,7 +236,7 @@ Excel::queue(
 
 ---
 
-### 📚 FilamentBase
+### 📚 Filament Base
 
 ### 🔌 Creating a Modular Filament Plugin
 

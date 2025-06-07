@@ -65,8 +65,14 @@ class StringHelpers
      */
     public static function normalizeString(?string $value): string
     {
+        $sanitized = self::sanitizeSpecialCharacters($value ?? '');
+
+        if ($sanitized === null) {
+            return '';
+        }
+
         return strtolower(
-            preg_replace('/\s+/', '', self::sanitizeSpecialCharacters($value ?? ''))
+            preg_replace('/\s+/', '', $sanitized)
         );
     }
 }
