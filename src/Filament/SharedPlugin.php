@@ -11,12 +11,6 @@ use ReflectionClass;
 
 class SharedPlugin implements Plugin
 {
-    protected bool $registerResources = true;
-
-    protected bool $registerPages = true;
-
-    protected bool $registerWidgets = true;
-
     public function getId(): string
     {
         return 'shared-plugin';
@@ -26,19 +20,21 @@ class SharedPlugin implements Plugin
     {
         $panel->navigationGroups($this->navigationGroups());
 
-        if ($this->shouldRegisterPages()) {
-            $panel->discoverPages(
-                in: $this->path('Pages'),
-                for: $this->namespace('Pages')
-            );
-        }
+        $panel->discoverResources(
+            in: $this->resolvePath('Resources'),
+            for: $this->resolveNamespace('Resources'),
+        );
 
-        if ($this->shouldRegisterResources()) {
-            $panel->discoverResources(
-                in: $this->path('Resources'),
-                for: $this->namespace('Resources')
-            );
-        }
+        $panel->discoverPages(
+            in: $this->resolvePath('Pages'),
+            for: $this->resolveNamespace('Pages'),
+        );
+
+        // Optional: for widgets if needed
+        // $panel->discoverWidgets(
+        //     in: $this->resolvePath('Widgets'),
+        //     for: $this->resolveNamespace('Widgets'),
+        // );
     }
 
     public function boot(Panel $panel): void {}
@@ -50,72 +46,27 @@ class SharedPlugin implements Plugin
 
     public static function get(): static
     {
-        return filament(app(static::class)->getId());
-    }
-
-    public function registerResources(bool $register = true): static
-    {
-        $this->registerResources = $register;
-
-        return $this;
-    }
-
-    public function shouldRegisterResources(): bool
-    {
-        return $this->registerResources;
-    }
-
-    public function registerPages(bool $register = true): static
-    {
-        $this->registerPages = $register;
-
-        return $this;
-    }
-
-    public function shouldRegisterPages(): bool
-    {
-        return $this->registerPages;
-    }
-
-    public function registerWidgets(bool $register = true): static
-    {
-        $this->registerWidgets = $register;
-
-        return $this;
-    }
-
-    public function shouldRegisterWidgets(): bool
-    {
-        return $this->registerWidgets;
+        return filament(static::make()->getId());
     }
 
     protected function navigationGroups(): array
     {
         return [
             NavigationGroup::make()
-                ->label(fn (): string => __('shared::navigations.groups.masters'))
+                ->label(fn() => __('shared::navigations.groups.masters'))
                 ->icon('tabler-database')
                 ->collapsed(),
         ];
     }
 
-    protected function path(string $subDir): string
+    protected function resolvePath(string $subDir): string
     {
-        $reflector = new ReflectionClass(static::class);
-        $baseDir = dirname($reflector->getFileName());
-
-        return $baseDir . DIRECTORY_SEPARATOR . $subDir;
+        return dirname((new ReflectionClass(static::class))->getFileName()) . DIRECTORY_SEPARATOR . $subDir;
     }
 
-    protected function namespace(string $subNamespace): string
+    protected function resolveNamespace(string $subNamespace): string
     {
-        $reflector = new ReflectionClass(static::class);
-        $baseNamespace = $reflector->getNamespaceName();
-
-        if (str_ends_with($baseNamespace, '\\Filament')) {
-            $baseNamespace = substr($baseNamespace, 0, -strlen('\\Filament'));
-        }
-
+        $baseNamespace = (new ReflectionClass(static::class))->getNamespaceName();
         return $baseNamespace . '\\' . $subNamespace;
     }
 }
