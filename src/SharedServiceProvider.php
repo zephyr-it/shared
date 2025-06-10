@@ -3,7 +3,6 @@
 namespace ZephyrIt\Shared;
 
 use Illuminate\Console\Scheduling\Schedule;
-use Spatie\LaravelPackageTools\Commands\InstallCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 
@@ -22,13 +21,7 @@ class SharedServiceProvider extends PackageServiceProvider
     {
         $package
             ->name(static::$name)
-            ->hasCommands($this->getCommands())
-            ->hasInstallCommand(function (InstallCommand $command) {
-                $command
-                    ->publishConfigFile()
-                    ->publishMigrations()
-                    ->askToRunMigrations();
-            });
+            ->hasCommands($this->getCommands());
 
         $configFileName = $package->shortName();
 
