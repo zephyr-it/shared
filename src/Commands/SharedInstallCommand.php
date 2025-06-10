@@ -21,6 +21,12 @@ class SharedInstallCommand extends Command
         $tenant = $this->option('tenant');
         $tenantOnly = $this->option('tenant-only');
 
+        if ($tenant && $tenantOnly) {
+            $this->error('The --tenant and --tenant-only options cannot be used together.');
+
+            return self::INVALID;
+        }
+
         // ─── Core install (skipped if only tenant-specific) ───────────────────────
         if (! $tenantOnly) {
             install_publish($this, [

@@ -62,4 +62,14 @@ trait HasDateRangeParser
 
         throw new InvalidArgumentException("Unsupported date format: {$date}");
     }
+
+    public function testParseDateRange(string | array $value): array
+    {
+        return $this->parseDateRange($value);
+    }
+
+    public function testParseDateRangeAsStrings(string | array $value, string $format = 'Y-m-d'): array
+    {
+        return $this->parseDateRangeAsStrings($value, $format);
+    }
 }

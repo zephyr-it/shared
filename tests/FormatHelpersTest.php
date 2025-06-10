@@ -6,14 +6,14 @@ it('generates add button label with or without prefix', function () {
     expect(FormatHelpers::formatAddButtonLabel())
         ->toBe(__('shared::labels.add'));
     expect(FormatHelpers::formatAddButtonLabel('User'))
-        ->toBe(__('shared::labels.add')." User");
+        ->toBe(__('shared::labels.add') . ' User');
 });
 
 it('generates copy message with or without prefix', function () {
     expect(FormatHelpers::formatCopyMessage(null))
         ->toBe(__('shared::messages.copied'));
     expect(FormatHelpers::formatCopyMessage('User ID'))
-        ->toBe('User ID '.__('shared::messages.copied'));
+        ->toBe('User ID ' . __('shared::messages.copied'));
 });
 
 it('converts numbers to words using number formatter', function () {

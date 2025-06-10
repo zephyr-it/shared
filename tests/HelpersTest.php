@@ -1,8 +1,8 @@
 <?php
 
 use ZephyrIt\Shared\Helpers\ArrayHelpers;
-use ZephyrIt\Shared\Helpers\StringHelpers;
 use ZephyrIt\Shared\Helpers\FormatHelpers;
+use ZephyrIt\Shared\Helpers\StringHelpers;
 
 it('flattens nested arrays using dot notation', function () {
     $input = ['a' => ['b' => 1, 'c' => ['d' => 2]]];
