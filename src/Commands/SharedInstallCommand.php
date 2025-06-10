@@ -52,13 +52,13 @@ class SharedInstallCommand extends Command
             install_publish_migrations(
                 command: $this,
                 sourceDir: __DIR__ . '/../../database/migrations',
-                targetDir: database_path('tenant/migrations')
+                targetDir: database_path('migrations/tenant')
             );
 
             install_publish_migrations(
                 command: $this,
                 sourceDir: __DIR__ . '/../../database/settings',
-                targetDir: database_path('tenant/settings')
+                targetDir: database_path('migrations/tenant/settings')
             );
 
             $this->info('✅ Tenant-specific migrations and settings published.');
