@@ -28,9 +28,11 @@ return [
     |
     */
     'user_model_resolver' => function () {
-        return tenant()
-            ? config('shared.user_models.tenant')
-            : config('shared.user_models.central');
+        if (function_exists('tenant') && tenant()) {
+            return config('shared.user_models.tenant');
+        }
+
+        return config('shared.user_models.central');
     },
 
     /*
