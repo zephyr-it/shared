@@ -15,7 +15,7 @@ class CleanupActivityLogCommand extends Command
     use SafeHasTenantsOption;
     use SafeTenantAwareCommand;
 
-    protected $signature = 'toolkit:schedule:tenant:cleanup-activity-log
+    protected $signature = 'shared:schedule:tenant:cleanup-activity-log
                             {--event= : Activity event type (created, updated, deleted, etc.)}
                             {--model= : The subject model class (e.g. App\Models\User)}
                             {--keep-days=0 : Retain logs from the last X days}

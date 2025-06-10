@@ -77,11 +77,11 @@ class SharedServiceProvider extends PackageServiceProvider
             $schedule = $this->app->make(Schedule::class);
 
             // 🌐 Central-only cleanup
-            $schedule->command('toolkit:schedule:central:cleanup-activity-log')->dailyAt('00:10');
+            $schedule->command('shared:schedule:central:cleanup-activity-log')->dailyAt('00:10');
 
             // 🏢 Multi-tenant cleanup
             if (function_exists('tenant')) {
-                $schedule->command('toolkit:schedule:tenant:cleanup-activity-log')->dailyAt('01:00');
+                $schedule->command('shared:schedule:tenant:cleanup-activity-log')->dailyAt('01:00');
             }
         });
     }
