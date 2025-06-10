@@ -44,7 +44,7 @@ class SharedInstallCommand extends Command
 
         // Publish external (vendor) dependencies like activitylog
         install_publish($this, [
-            ['command' => 'activitylog-migrations'],
+            ['tag' => 'activitylog-migrations'],
         ], $force);
 
         // ─── Tenant install ───────────────────────────────────────────────────────
