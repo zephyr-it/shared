@@ -767,12 +767,15 @@ The `BaseSeeder` class provides a **safe, idempotent, and environment-aware seed
 
 ### 🔧 Setup
 
-Ensure the `seed_log` tracking table exists by running:
+Ensure the `seed_log` tracking table exists by running the shared installer:
 
 ```bash
-php artisan vendor:publish --tag=shared-migrations
+php artisan shared:install
 php artisan migrate
 ```
+
+> **Note** Avoid using `vendor:publish` directly. The `shared:install` command
+> handles publishing migrations and other assets in a single step.
 
 ---
 
