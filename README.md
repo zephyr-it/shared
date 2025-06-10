@@ -17,23 +17,24 @@ It provides:
 
 ## 📑 Table of Contents
 
-- [Installation](#installation)
-- [Usage](#usage)
-- [Excel Report Exports](#excel-report-exports)
-- [Global Helper Functions](#global-helper-functions)
-- [Model Concerns](#model-concerns)
-- [UniqueEncryptedRule](#uniqueencryptedrule)
-- [Smart Seeding System with BaseSeeder](#smart-seeding-system-with-baseseeder)
-- [Useful Shared Traits](#useful-shared-traits)
-- [Dynamic Metrics Engine](#dynamic-metrics-engine)
-- [How to Use](#how-to-use)
-- [Helper Methods (Internal Use)](#helper-methods-internal-use)
-- [Testing](#testing)
-- [Changelog](#changelog)
-- [Contributing](#contributing)
-- [Security](#security)
-- [Credits](#credits)
-- [License](#license)
+-   [Installation](#installation)
+-   [Usage](#usage)
+-   [Excel Report Exports](#excel-report-exports)
+-   [Global Helper Functions](#global-helper-functions)
+-   [Model Concerns](#model-concerns)
+-   [UniqueEncryptedRule](#uniqueencryptedrule)
+-   [Smart Seeding System with BaseSeeder](#smart-seeding-system-with-baseseeder)
+-   [Useful Shared Traits](#useful-shared-traits)
+-   [Dynamic Metrics Engine](#dynamic-metrics-engine)
+-   [How to Use](#how-to-use)
+-   [Helper Methods (Internal Use)](#helper-methods-internal-use)
+-   [Testing](#testing)
+-   [Changelog](#changelog)
+-   [Contributing](#contributing)
+-   [Security](#security)
+-   [Credits](#credits)
+-   [License](#license)
+
 ---
 
 ## 📦 Installation
@@ -267,42 +268,6 @@ Zephyr Shared provides a powerful `BasePlugin` class to streamline plugin develo
 -   ✅ Detects correct namespaces and directories based on file location
 -   ✅ Keeps plugin definitions DRY and declarative
 -   ✅ Supports toggling discovery for Pages, Widgets, and Resources
-
----
-
-#### 🧰 How to Create a Plugin
-
-To build a plugin for your module (e.g., `Accounts`), extend `BasePlugin`:
-
-```php
-namespace ZephyrIt\Accounts\Filament;
-
-use ZephyrIt\FilamentCustomizer\Base\Plugins\BasePlugin;
-use Filament\Navigation\NavigationGroup;
-
-class AccountsPlugin extends BasePlugin
-{
-    public function getId(): string
-    {
-        return 'accounts';
-    }
-
-    protected function navigationGroups(): array
-    {
-        return [
-            NavigationGroup::make()
-                ->label(__('accounts::navigations.groups.transactions'))
-                ->icon('tabler-report-money')
-                ->collapsed(),
-
-            NavigationGroup::make()
-                ->label(__('accounts::navigations.groups.configuration'))
-                ->icon('tabler-settings')
-                ->collapsed(),
-        ];
-    }
-}
-```
 
 ---
 
