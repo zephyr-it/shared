@@ -271,34 +271,17 @@ Zephyr Shared provides a powerful `BasePlugin` class to streamline plugin develo
 
 ---
 
-#### 📁 Required Folder Structure
-
-To enable auto-discovery, structure your module as follows:
-
-```
-src/
-└── Filament/
-    ├── Pages/
-    ├── Resources/
-    ├── Widgets/
-    └── AccountsPlugin.php
-```
-
-Any components inside `Pages/`, `Resources/`, and `Widgets/` will be automatically registered when the plugin is loaded.
-
----
-
 #### 🧪 Register in Filament Panel
 
 To enable your plugin in the Filament panel:
 
 ```php
-use ZephyrIt\Accounts\Filament\AccountsPlugin;
+use ZephyrIt\Accounts\Filament\SharedPlugin;
 
 public function panel(Panel $panel): Panel
 {
     return $panel
-        ->plugin(AccountsPlugin::make());
+        ->plugin(SharedPlugin::make());
 }
 ```
 
@@ -309,7 +292,7 @@ public function panel(Panel $panel): Panel
 Want to skip registering specific components?
 
 ```php
-AccountsPlugin::make()
+SharedPlugin::make()
     ->registerPages(false)
     ->registerWidgets(false);
 ```
