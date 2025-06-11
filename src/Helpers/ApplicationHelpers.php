@@ -89,6 +89,6 @@ class ApplicationHelpers
      */
     public static function safeTenant()
     {
-        return function_exists('tenant') && tenancy()->initialized ? tenant() : false;
+        return function_exists('tenant') && tenancy()->initialized ? tenant() : null;
     }
 }
