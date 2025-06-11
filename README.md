@@ -314,38 +314,6 @@ Zephyr Shared includes a `ReportPage` base class to help you rapidly scaffold Fi
 
 ---
 
-#### 📋 Example: Custom Ledger Report Page
-
-```php
-namespace ZephyrIt\Accounts\Filament\Pages;
-
-use ZephyrIt\Shared\FilamentBase\Pages\ReportPage;
-use Filament\Forms\Components\Select;
-
-class LedgerReport extends ReportPage
-{
-    protected static ?string $navigationIcon = 'tabler-report';
-    protected static string $titleKey = 'accounts::navigations.labels.ledger_report';
-
-    public static function getNavigationGroup(): string
-    {
-        return __('accounts::navigations.groups.reports');
-    }
-
-    protected function getFilterFormSchema(): array
-    {
-        return [
-            Select::make('account_id')
-                ->label(__('accounts::labels.account'))
-                ->relationship('account', 'name')
-                ->searchable(),
-        ];
-    }
-}
-```
-
----
-
 ### ✅ Built-In Features
 
 When extending `ReportPage`, you automatically get:
