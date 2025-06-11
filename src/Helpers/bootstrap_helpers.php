@@ -199,7 +199,7 @@ if (! function_exists('transformSupportedLocales')) {
 }
 
 if (! function_exists('safeTenant')) {
-    function safeTenant(): array
+    function safeTenant()
     {
         return ApplicationHelpers::safeTenant();
     }
