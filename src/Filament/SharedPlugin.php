@@ -53,7 +53,7 @@ class SharedPlugin implements Plugin
     {
         return [
             NavigationGroup::make()
-                ->label(fn() => __('shared::navigations.groups.masters'))
+                ->label(fn () => __('shared::navigations.groups.masters'))
                 ->icon('tabler-database')
                 ->collapsed(),
         ];
@@ -67,6 +67,7 @@ class SharedPlugin implements Plugin
     protected function resolveNamespace(string $subNamespace): string
     {
         $baseNamespace = (new ReflectionClass(static::class))->getNamespaceName();
+
         return $baseNamespace . '\\' . $subNamespace;
     }
 }

@@ -28,7 +28,7 @@ return [
     |
     */
     'user_model_resolver' => function () {
-        if (function_exists('tenant') && tenant()) {
+        if (safeTenant()) {
             return config('shared.user_models.tenant');
         }
 

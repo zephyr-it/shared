@@ -44,7 +44,7 @@ class ApplicationHelpers
     {
         $country = null;
 
-        if (function_exists('tenant') && tenant()?->country_id) {
+        if (self::safeTenant()?->country_id) {
             $country = Country::find(tenant()->country_id);
         }
 
@@ -80,5 +80,13 @@ class ApplicationHelpers
     public static function transformSupportedLocales(): array
     {
         return array_map(fn ($locale) => $locale['name'], config('laravellocalization.supportedLocales', []));
+    }
+
+    /**
+     * Get the current tenant safely.
+     */
+    public static function safeTenant()
+    {
+        return function_exists('tenant') ? tenant() : null;
     }
 }
