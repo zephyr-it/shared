@@ -44,13 +44,15 @@ class ApplicationHelpers
     {
         $country = null;
 
-        if (self::safeTenant()?->country_id) {
-            $country = Country::find(tenant()->country_id);
+        $tenant = self::safeTenant();
+
+        if ($tenant && $tenant->country_id) {
+            $country = Country::find($tenant->country_id);
         }
 
         if (! $country) {
-            $defaultCountry = config('shared.default_country', 'India');
-            $country = Country::where('name', $defaultCountry)->first();
+            $defaultCountryName = config('shared.default_country', 'India');
+            $country = Country::where('name', $defaultCountryName)->first();
         }
 
         return $country?->currency_symbol ?? '';
