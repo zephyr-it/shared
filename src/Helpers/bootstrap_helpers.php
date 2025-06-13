@@ -305,9 +305,19 @@ if (! function_exists('install_publish_migrations')) {
         string $sourceDir,
         ?string $targetDir = null,
         string $type = 'settings',
-        bool $timestamp = true
+        bool $timestamp = true,
+        ?array $migrationList = null,
+        bool $force = false
     ): void {
-        InstallHelper::publishMigrations($command, $sourceDir, $targetDir, $type, $timestamp);
+        InstallHelper::publishMigrations(
+            command: $command,
+            sourceDir: $sourceDir,
+            targetDir: $targetDir,
+            type: $type,
+            timestamp: $timestamp,
+            migrationList: $migrationList,
+            force: $force
+        );
     }
 }
 

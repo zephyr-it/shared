@@ -48,7 +48,9 @@ class InstallHelper
         string $sourceDir,
         ?string $targetDir = null,
         string $type = 'settings',
-        bool $timestamp = true
+        bool $timestamp = true,
+        ?array $migrationList = null,
+        bool $force = false
     ): void {
         $targetDir ??= database_path($type);
 
@@ -63,31 +65,49 @@ class InstallHelper
             $command->info("📁 Created migration directory: {$targetDir}");
         }
 
-        $files = glob($sourceDir . '/*.php');
+        $migrationList = $migrationList ?? array_map(
+            fn ($file) => pathinfo($file, PATHINFO_FILENAME),
+            glob($sourceDir . '/*.php')
+        );
 
-        if (! $files) {
-            $command->warn("⚠️  No migration files found in {$sourceDir}.");
+        foreach ($migrationList as $migration) {
+            $sourcePath = "{$sourceDir}/{$migration}.php";
 
-            return;
-        }
+            if (! File::exists($sourcePath)) {
+                $command->warn("⚠️  Missing source migration: {$migration}.php");
 
-        foreach ($files as $path) {
-            $filename = basename($path);
-            $existingMatches = glob($targetDir . '/*_' . $filename);
+                continue;
+            }
 
-            foreach ($existingMatches as $existingPath) {
-                File::delete($existingPath);
-                $command->info('♻️  Replaced existing: ' . basename($existingPath));
+            $existing = glob("{$targetDir}/*_{$migration}.php");
+
+            if ($existing) {
+                $existingPath = $existing[0];
+
+                if (! $force) {
+                    $command->line("✅ Skipped (already exists): {$migration}");
+
+                    continue;
+                }
+
+                if (File::get($existingPath) !== File::get($sourcePath)) {
+                    File::put($existingPath, File::get($sourcePath));
+                    $command->info('♻️  Updated existing: ' . basename($existingPath));
+                } else {
+                    $command->line('✅ No changes: ' . basename($existingPath));
+                }
+
+                continue;
             }
 
             $prefix = $timestamp ? now()->format('Y_m_d_His') . '_' : '';
-            $targetPath = "{$targetDir}/{$prefix}{$filename}";
+            $targetPath = "{$targetDir}/{$prefix}{$migration}.php";
 
-            File::copy($path, $targetPath);
-            $command->info("📦 Published: {$filename} → " . basename($targetPath));
+            File::copy($sourcePath, $targetPath);
+            $command->info("📦 Published new: {$migration}.php");
 
             if ($timestamp) {
-                sleep(1);
+                sleep(1); // ensure unique timestamps
             }
         }
     }

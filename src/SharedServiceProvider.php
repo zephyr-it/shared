@@ -57,7 +57,7 @@ class SharedServiceProvider extends PackageServiceProvider
     /**
      * @return array<string>
      */
-    protected function getMigrations(): array
+    public static function getMigrations(): array
     {
         return [
             'create_seeder_logs_table',

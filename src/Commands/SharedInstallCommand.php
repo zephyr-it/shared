@@ -3,6 +3,7 @@
 namespace ZephyrIt\Shared\Commands;
 
 use Illuminate\Console\Command;
+use ZephyrIt\Shared\SharedServiceProvider;
 
 class SharedInstallCommand extends Command
 {
@@ -38,7 +39,9 @@ class SharedInstallCommand extends Command
             install_publish_migrations(
                 command: $this,
                 sourceDir: __DIR__ . '/../../database/settings',
-                type: 'settings'
+                type: 'settings',
+                migrationList: SharedServiceProvider::getMigrations(),
+                force: $force
             );
         }
 
@@ -52,13 +55,17 @@ class SharedInstallCommand extends Command
             install_publish_migrations(
                 command: $this,
                 sourceDir: __DIR__ . '/../../database/migrations',
-                targetDir: database_path('migrations/tenant')
+                targetDir: database_path('migrations/tenant'),
+                migrationList: SharedServiceProvider::getMigrations(),
+                force: $force
             );
 
             install_publish_migrations(
                 command: $this,
                 sourceDir: __DIR__ . '/../../database/settings',
-                targetDir: database_path('migrations/tenant/settings')
+                targetDir: database_path('migrations/tenant/settings'),
+                migrationList: SharedServiceProvider::getMigrations(),
+                force: $force
             );
 
             $this->info('✅ Tenant-specific migrations and settings published.');
