@@ -2,7 +2,7 @@
 
 namespace ZephyrIt\Shared\Support;
 
-if (class_exists(\Stancl\Tenancy\Concerns\TenantAwareCommand::class)) {
+if (function_exists('tenant')) {
     trait SafeTenantAwareCommand
     {
         use \Stancl\Tenancy\Concerns\TenantAwareCommand;

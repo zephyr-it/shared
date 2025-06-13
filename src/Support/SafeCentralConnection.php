@@ -7,7 +7,8 @@ namespace ZephyrIt\Shared\Support;
  *
  * Uses Stancl\Tenancy's CentralConnection if available, else does nothing.
  */
-if (class_exists(\Stancl\Tenancy\Database\Concerns\CentralConnection::class)) {
+
+if (function_exists('tenant')) {
     trait SafeCentralConnection
     {
         use \Stancl\Tenancy\Database\Concerns\CentralConnection;
