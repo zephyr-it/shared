@@ -12,7 +12,7 @@ trait HasLocationFields
     /**
      * User selects Country → State → City (manual flow).
      */
-    public function locationCountryFirst(): array
+    protected static function locationCountryFirst(): array
     {
         return [
             Forms\Components\Select::make('country_id')
@@ -63,7 +63,7 @@ trait HasLocationFields
     /**
      * User selects City → auto-selects State & Country (readonly).
      */
-    public function locationCityFirst(): array
+    protected static function locationCityFirst(): array
     {
         return [
             Forms\Components\Select::make('city_id')
