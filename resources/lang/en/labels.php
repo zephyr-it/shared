@@ -3,6 +3,7 @@
 return [
     'add' => 'Add',
     'capital' => 'Capital',
+    'city' => 'City',
     'country' => 'Country',
     'country_code' => 'Country Code',
     'created_at' => 'Created At',
