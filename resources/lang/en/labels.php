@@ -12,7 +12,6 @@ return [
         'symbol' => 'Currency Symbol',
         'title' => 'Currency Title',
     ],
-    'date_range' => 'Date Range',
     'emoji' => 'Emoji',
     'emojiU' => 'Emoji Unicode',
     'fieldset' => [

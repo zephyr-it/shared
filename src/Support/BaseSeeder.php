@@ -6,52 +6,57 @@ use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
+/**
+ * BaseSeeder.
+ *
+ * A recursive seeder that ensures:
+ * - Only internal/leaf seeders are logged (never parent/group seeders)
+ * - Nested seeders are run recursively via getSeeders()
+ * - Logging is done only for seeders that actually insert data
+ */
 abstract class BaseSeeder extends Seeder
 {
     /**
-     * Main entrypoint for the seeder.
+     * Entrypoint for Laravel's seeding system.
      */
     public function run(): void
     {
         activity()->disableLogging();
 
         try {
-            if ($this->hasSeeded(static::class)) {
-                return;
-            }
-
-            if ($seeders = $this->getSeeders()) {
-                foreach ($seeders as $nestedSeeder) {
-                    $this->call($nestedSeeder);
-                }
-            } else {
-                $this->handle();
-            }
-
-            $this->logSeeder(static::class);
+            $this->runSeederRecursively(static::class);
         } finally {
             activity()->enableLogging();
         }
     }
 
     /**
-     * Override to define seeder logic.
+     * Recursively runs nested seeders and logs leaf-level ones only.
      */
-    public function handle(): void
+    protected function runSeederRecursively(string $seeder): void
     {
-        // Your seeding logic here.
+        if ($this->hasSeeded($seeder)) {
+            return;
+        }
+
+        $instance = app($seeder);
+
+        $isGroupSeeder = method_exists($instance, 'getSeeders') && ! empty($instance->getSeeders());
+
+        if ($isGroupSeeder) {
+            foreach ($instance->getSeeders() as $nested) {
+                $this->runSeederRecursively($nested);
+            }
+
+            return; // 🚫 Do not log group seeders
+        }
+
+        $this->call($seeder);
+        $this->logSeeder($seeder);
     }
 
     /**
-     * Override to return nested seeders.
-     */
-    public function getSeeders(): array
-    {
-        return [];
-    }
-
-    /**
-     * Check if this seeder has already run.
+     * Check if a seeder has already run.
      */
     protected function hasSeeded(string $seeder): bool
     {
@@ -60,7 +65,7 @@ abstract class BaseSeeder extends Seeder
     }
 
     /**
-     * Log that this seeder has run.
+     * Log a seeder as completed.
      */
     protected function logSeeder(string $seeder): void
     {
@@ -69,5 +74,21 @@ abstract class BaseSeeder extends Seeder
             'created_at' => now(),
             'updated_at' => now(),
         ]);
+    }
+
+    /**
+     * Must be implemented to define child seeders.
+     * Return an array of fully-qualified seeder class names.
+     *
+     * @return array<class-string<Seeder>>
+     */
+    abstract public function getSeeders(): array;
+
+    /**
+     * Optional for leaf-seeders with direct logic instead of getSeeders().
+     */
+    public function handle(): void
+    {
+        // Only used in non-nested contexts
     }
 }

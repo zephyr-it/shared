@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace ZephyrIt\Shared\Helpers;
 
+use Illuminate\Support\Collection;
 use ReflectionEnum;
 
 class EnumHelpers
@@ -41,7 +42,7 @@ class EnumHelpers
      */
     public static function getFilteredEnumStatuses(string $enumClass, array $excludedCases = []): array
     {
-        return \Illuminate\Support\Collection::make($enumClass::cases())
+        return Collection::make($enumClass::cases())
             ->filter(fn ($status) => ! in_array($status->value, $excludedCases))
             ->mapWithKeys(fn ($status) => [$status->value => $status->getLabel()])
             ->toArray();
