@@ -18,7 +18,7 @@ class SharedPlugin implements Plugin
 
     public function register(Panel $panel): void
     {
-        $panel->navigationGroups($this->navigationGroups());
+        $panel->navigationGroups(self::getNavigationGroups());
 
         $panel->discoverResources(
             in: $this->resolvePath('Resources'),
@@ -49,7 +49,7 @@ class SharedPlugin implements Plugin
         return filament(static::make()->getId());
     }
 
-    protected function navigationGroups(): array
+    public static function getNavigationGroups(): array
     {
         return [
             NavigationGroup::make()

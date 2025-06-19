@@ -137,8 +137,11 @@ class CountryResource extends Resource
                             ->label(__('shared::labels.emojiU'))
                             ->maxLength(191)
                             ->default(null),
-                        Forms\Components\Toggle::make('flag')
+                        Forms\Components\ToggleButtons::make('flag')
                             ->label(__('shared::labels.flag'))
+                            ->boolean()
+                            ->grouped()
+                            ->default(true)
                             ->required(),
                         Forms\Components\TextInput::make('wikiDataId')
                             ->label(__('shared::labels.wikiDataId'))

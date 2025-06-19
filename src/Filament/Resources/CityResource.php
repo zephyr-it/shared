@@ -76,8 +76,11 @@ class CityResource extends Resource
                     ])->columns(2),
                 Forms\Components\Fieldset::make(__('shared::labels.fieldset.additional_details'))
                     ->schema([
-                        Forms\Components\Toggle::make('flag')
+                        Forms\Components\ToggleButtons::make('flag')
                             ->label(__('shared::labels.flag'))
+                            ->boolean()
+                            ->grouped()
+                            ->default(true)
                             ->required(),
                         Forms\Components\TextInput::make('wikiDataId')
                             ->label(__('shared::labels.wikiDataId'))
