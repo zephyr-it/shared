@@ -28,6 +28,7 @@
         "maatwebsite/excel": "^3.1",
         "mallardduck/blade-lucide-icons": "^1.23",
         "malzariey/filament-daterangepicker-filter": "^3.4",
+        "mcamara/laravel-localization": "^2.3",
         "secondnetwork/blade-tabler-icons": "^3.33",
         "spatie/laravel-activitylog": "^4.10",
         "spatie/laravel-package-tools": "^1.16"
