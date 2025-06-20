@@ -205,6 +205,13 @@ if (! function_exists('safeTenant')) {
     }
 }
 
+if (! function_exists('resolveAcceptedMimeTypes')) {
+    function resolveAcceptedMimeTypes(array $types): array
+    {
+        return ApplicationHelpers::resolveAcceptedMimeTypes($types);
+    }
+}
+
 // Module Helpers
 if (! function_exists('getActiveModules')) {
     function getActiveModules(): array

@@ -91,4 +91,120 @@ class ApplicationHelpers
     {
         return function_exists('tenant') && tenancy()->initialized ? tenant() : null;
     }
+
+    /**
+     * Resolve accepted mime types for a given array of types.
+     */
+    public static function resolveAcceptedMimeTypes(array $types): array
+    {
+        $mimeGroups = [
+            'image' => [
+                'mimes' => ['image/jpeg', 'image/png', 'image/webp', 'image/gif'],
+                'ext' => ['.jpg', '.jpeg', '.png', '.webp', '.gif'],
+            ],
+            'svg' => [
+                'mimes' => ['image/svg+xml'],
+                'ext' => ['.svg'],
+                'note' => 'Requires sanitization if user-uploaded',
+            ],
+            'image-other' => [
+                'mimes' => ['image/bmp', 'image/tiff', 'image/x-icon', 'image/vnd.microsoft.icon'],
+                'ext' => ['.bmp', '.tiff', '.ico'],
+                'note' => 'Display may fail in browsers. Consider conversion.',
+            ],
+            'pdf' => [
+                'mimes' => ['application/pdf'],
+                'ext' => ['.pdf'],
+            ],
+            'zip' => [
+                'mimes' => [
+                    'application/zip',
+                    'application/x-zip-compressed',
+                    'application/octet-stream',
+                    'application/x-rar-compressed',
+                    'application/vnd.rar',
+                    'application/x-rar',
+                    'application/x-tar',
+                ],
+                'ext' => ['.zip', '.rar', '.tar'],
+            ],
+            'excel' => [
+                'mimes' => [
+                    'application/vnd.ms-excel',
+                    'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+                    'application/vnd.openxmlformats-officedocument.spreadsheetml.template',
+                    'application/vnd.ms-excel.sheet.macroEnabled.12',
+                    'application/vnd.ms-excel.template.macroEnabled.12',
+                ],
+                'ext' => ['.xls', '.xlsx', '.xltx', '.xlsm', '.xltm'],
+            ],
+            'word' => [
+                'mimes' => [
+                    'application/msword',
+                    'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+                    'application/vnd.openxmlformats-officedocument.wordprocessingml.template',
+                ],
+                'ext' => ['.doc', '.docx', '.dotx'],
+            ],
+            'text' => [
+                'mimes' => ['text/plain'],
+                'ext' => ['.txt'],
+            ],
+        ];
+
+        $mimeFormats = [
+            'png' => ['mimes' => ['image/png'], 'ext' => ['.png']],
+            'jpg' => ['mimes' => ['image/jpeg'], 'ext' => ['.jpg', '.jpeg']],
+            'jpeg' => ['mimes' => ['image/jpeg'], 'ext' => ['.jpeg']],
+            'webp' => ['mimes' => ['image/webp'], 'ext' => ['.webp']],
+            'gif' => ['mimes' => ['image/gif'], 'ext' => ['.gif']],
+            'svg' => ['mimes' => ['image/svg+xml'], 'ext' => ['.svg']],
+        ];
+
+        $mimes = [];
+        $extensions = [];
+        $json = [];
+
+        foreach ($types as $type) {
+            $key = strtolower(trim($type));
+
+            if (isset($mimeGroups[$key])) {
+                $mimes = array_merge($mimes, $mimeGroups[$key]['mimes']);
+                $extensions = array_merge($extensions, $mimeGroups[$key]['ext']);
+
+                $json[] = [
+                    'group' => $key,
+                    'mimes' => $mimeGroups[$key]['mimes'],
+                    'extensions' => $mimeGroups[$key]['ext'],
+                    'note' => $mimeGroups[$key]['note'] ?? null,
+                ];
+            } elseif (isset($mimeFormats[$key])) {
+                $mimes = array_merge($mimes, $mimeFormats[$key]['mimes']);
+                $extensions = array_merge($extensions, $mimeFormats[$key]['ext']);
+
+                $json[] = [
+                    'group' => $key,
+                    'mimes' => $mimeFormats[$key]['mimes'],
+                    'extensions' => $mimeFormats[$key]['ext'],
+                    'note' => null,
+                ];
+            } else {
+                $mimes[] = $key;
+                $json[] = [
+                    'group' => 'custom',
+                    'mimes' => [$key],
+                    'extensions' => [],
+                    'note' => 'Custom MIME type',
+                ];
+            }
+        }
+
+        return [
+            'mimes' => array_unique($mimes),
+            'helper' => count($extensions)
+                ? implode(', ', array_unique($extensions))
+                : implode(', ', array_unique($mimes)),
+            'json' => $json,
+        ];
+    }
 }
