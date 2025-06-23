@@ -2,10 +2,12 @@
 
 namespace ZephyrIt\Shared\Support;
 
+use Stancl\Tenancy\Concerns\HasATenantsOption;
+
 if (function_exists('tenant')) {
     trait SafeHasTenantsOption
     {
-        use \Stancl\Tenancy\Concerns\HasATenantsOption;
+        use HasATenantsOption;
     }
 } else {
     trait SafeHasTenantsOption

@@ -4,9 +4,15 @@ declare(strict_types=1);
 
 namespace ZephyrIt\Shared\Filament\Resources;
 
+use BackedEnum;
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteAction;
+use Filament\Actions\DeleteBulkAction;
+use Filament\Actions\EditAction;
 use Filament\Forms;
-use Filament\Forms\Form;
 use Filament\Resources\Resource;
+use Filament\Schemas\Components\Fieldset;
+use Filament\Schemas\Schema;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Malzariey\FilamentDaterangepickerFilter\Filters\DateRangeFilter;
@@ -17,7 +23,7 @@ class CountryResource extends Resource
 {
     protected static ?string $model = Country::class;
 
-    protected static ?string $navigationIcon = 'ri-earth-line';
+    protected static string | BackedEnum | null $navigationIcon = 'ri-earth-line';
 
     protected static ?int $navigationSort = 1;
 
@@ -36,11 +42,11 @@ class CountryResource extends Resource
         return __('shared::navigations.groups.masters');
     }
 
-    public static function form(Form $form): Form
+    public static function form(Schema $schema): Schema
     {
-        return $form
-            ->schema([
-                Forms\Components\Fieldset::make(__('shared::labels.fieldset.general_information'))
+        return $schema
+            ->components([
+                Fieldset::make(__('shared::labels.fieldset.general_information'))
                     ->schema([
                         Forms\Components\TextInput::make('name')
                             ->label(__('shared::labels.name'))
@@ -63,7 +69,7 @@ class CountryResource extends Resource
                             ->tel()
                             ->default(null),
                     ])->columns(2),
-                Forms\Components\Fieldset::make(__('shared::labels.fieldset.additional_information'))
+                Fieldset::make(__('shared::labels.fieldset.additional_information'))
                     ->schema([
                         Forms\Components\TextInput::make('capital')
                             ->label(__('shared::labels.capital'))
@@ -81,7 +87,7 @@ class CountryResource extends Resource
                             ->label(__('shared::labels.tld'))
                             ->default(null),
                     ])->columns(2),
-                Forms\Components\Fieldset::make(__('shared::labels.fieldset.location_information'))
+                Fieldset::make(__('shared::labels.fieldset.location_information'))
                     ->schema([
                         Forms\Components\TextInput::make('native')
                             ->label(__('shared::labels.native'))
@@ -104,19 +110,19 @@ class CountryResource extends Resource
                             ->label(__('shared::labels.nationality'))
                             ->default(null),
                     ])->columns(2),
-                Forms\Components\Fieldset::make(__('shared::labels.fieldset.timezone_information'))
+                Fieldset::make(__('shared::labels.fieldset.timezone_information'))
                     ->schema([
                         Forms\Components\Textarea::make('timezones')
                             ->label(__('shared::labels.timezones'))
                             ->columnSpanFull(),
                     ])->columns(1),
-                Forms\Components\Fieldset::make(__('shared::labels.fieldset.translation_information'))
+                Fieldset::make(__('shared::labels.fieldset.translation_information'))
                     ->schema([
                         Forms\Components\Textarea::make('translations')
                             ->label(__('shared::labels.translations'))
                             ->columnSpanFull(),
                     ])->columns(1),
-                Forms\Components\Fieldset::make(__('shared::labels.fieldset.geographical_information'))
+                Fieldset::make(__('shared::labels.fieldset.geographical_information'))
                     ->schema([
                         Forms\Components\TextInput::make('latitude')
                             ->label(__('shared::labels.latitude'))
@@ -127,7 +133,7 @@ class CountryResource extends Resource
                             ->numeric()
                             ->default(null),
                     ])->columns(2),
-                Forms\Components\Fieldset::make(__('shared::labels.fieldset.additional_details'))
+                Fieldset::make(__('shared::labels.fieldset.additional_details'))
                     ->schema([
                         Forms\Components\TextInput::make('emoji')
                             ->label(__('shared::labels.emoji'))
@@ -247,13 +253,13 @@ class CountryResource extends Resource
                 Tables\Filters\TernaryFilter::make('flag')
                     ->label(__('shared::labels.flag')),
             ])
-            ->actions([
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
+            ->recordActions([
+                EditAction::make(),
+                DeleteAction::make(),
             ])
-            ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+            ->toolbarActions([
+                BulkActionGroup::make([
+                    DeleteBulkAction::make(),
                 ]),
             ]);
     }

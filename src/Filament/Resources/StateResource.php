@@ -4,9 +4,15 @@ declare(strict_types=1);
 
 namespace ZephyrIt\Shared\Filament\Resources;
 
+use BackedEnum;
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteAction;
+use Filament\Actions\DeleteBulkAction;
+use Filament\Actions\EditAction;
 use Filament\Forms;
-use Filament\Forms\Form;
 use Filament\Resources\Resource;
+use Filament\Schemas\Components\Fieldset;
+use Filament\Schemas\Schema;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Malzariey\FilamentDaterangepickerFilter\Filters\DateRangeFilter;
@@ -18,7 +24,7 @@ class StateResource extends Resource
 {
     protected static ?string $model = State::class;
 
-    protected static ?string $navigationIcon = 'ri-government-line';
+    protected static string | BackedEnum | null $navigationIcon = 'ri-government-line';
 
     protected static ?int $navigationSort = 2;
 
@@ -37,11 +43,11 @@ class StateResource extends Resource
         return __('shared::navigations.groups.masters');
     }
 
-    public static function form(Form $form): Form
+    public static function form(Schema $schema): Schema
     {
-        return $form
-            ->schema([
-                Forms\Components\Fieldset::make(__('shared::labels.fieldset.general_information'))
+        return $schema
+            ->components([
+                Fieldset::make(__('shared::labels.fieldset.general_information'))
                     ->schema([
                         Forms\Components\TextInput::make('name')
                             ->label(__('shared::labels.name'))
@@ -55,7 +61,7 @@ class StateResource extends Resource
                             ->required()
                             ->maxLength(2),
                     ])->columns(2),
-                Forms\Components\Fieldset::make(__('shared::labels.fieldset.additional_information'))
+                Fieldset::make(__('shared::labels.fieldset.additional_information'))
                     ->schema([
                         Forms\Components\TextInput::make('fips_code')
                             ->label(__('shared::labels.fips_code'))
@@ -68,7 +74,7 @@ class StateResource extends Resource
                             ->maxLength(191)
                             ->default(null),
                     ])->columns(2),
-                Forms\Components\Fieldset::make(__('shared::labels.fieldset.geographical_information'))
+                Fieldset::make(__('shared::labels.fieldset.geographical_information'))
                     ->schema([
                         Forms\Components\TextInput::make('latitude')
                             ->label(__('shared::labels.latitude'))
@@ -79,7 +85,7 @@ class StateResource extends Resource
                             ->numeric()
                             ->default(null),
                     ])->columns(2),
-                Forms\Components\Fieldset::make(__('shared::labels.fieldset.additional_details'))
+                Fieldset::make(__('shared::labels.fieldset.additional_details'))
                     ->schema([
                         Forms\Components\ToggleButtons::make('flag')
                             ->label(__('shared::labels.flag'))
@@ -150,13 +156,13 @@ class StateResource extends Resource
                 Tables\Filters\TernaryFilter::make('flag')
                     ->label(__('shared::labels.flag')),
             ])
-            ->actions([
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
+            ->recordActions([
+                EditAction::make(),
+                DeleteAction::make(),
             ])
-            ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+            ->toolbarActions([
+                BulkActionGroup::make([
+                    DeleteBulkAction::make(),
                 ]),
             ]);
     }

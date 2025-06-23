@@ -3,6 +3,8 @@
 namespace ZephyrIt\Shared\Filament\Components;
 
 use Filament\Forms;
+use Filament\Schemas\Components\Utilities\Get;
+use Filament\Schemas\Components\Utilities\Set;
 use ZephyrIt\Shared\Models\City;
 use ZephyrIt\Shared\Models\Country;
 use ZephyrIt\Shared\Models\State;
@@ -28,7 +30,7 @@ trait HasLocationFields
                         ->toArray()
                 )
                 ->getOptionLabelUsing(fn ($value) => Country::find($value)?->name)
-                ->afterStateUpdated(fn (Forms\Set $set) => $set('state_id', null)->set('city_id', null)),
+                ->afterStateUpdated(fn (Set $set) => $set('state_id', null)->set('city_id', null)),
 
             Forms\Components\Select::make('state_id')
                 ->label(__('shared::labels.state'))
@@ -36,21 +38,21 @@ trait HasLocationFields
                 ->reactive()
                 ->required()
                 ->getSearchResultsUsing(
-                    fn (string $search, Forms\Get $get) => State::where('country_id', $get('country_id'))
+                    fn (string $search, Get $get) => State::where('country_id', $get('country_id'))
                         ->where('name', 'like', "%{$search}%")
                         ->limit(50)
                         ->pluck('name', 'id')
                         ->toArray()
                 )
                 ->getOptionLabelUsing(fn ($value) => State::find($value)?->name)
-                ->afterStateUpdated(fn (Forms\Set $set) => $set('city_id', null)),
+                ->afterStateUpdated(fn (Set $set) => $set('city_id', null)),
 
             Forms\Components\Select::make('city_id')
                 ->label(__('shared::labels.city'))
                 ->searchable()
                 ->required()
                 ->getSearchResultsUsing(
-                    fn (string $search, Forms\Get $get) => City::where('state_id', $get('state_id'))
+                    fn (string $search, Get $get) => City::where('state_id', $get('state_id'))
                         ->where('name', 'like', "%{$search}%")
                         ->limit(50)
                         ->pluck('name', 'id')
@@ -88,7 +90,7 @@ trait HasLocationFields
                         ? "{$city->name}, {$city->state->name}, {$city->state->country->name}"
                         : null;
                 })
-                ->afterStateUpdated(function (?int $cityId, Forms\Set $set) {
+                ->afterStateUpdated(function (?int $cityId, Set $set) {
                     $city = City::with('state.country')->find($cityId);
                     if ($city) {
                         $set('state_id', $city->state->id);

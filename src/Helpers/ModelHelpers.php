@@ -6,6 +6,8 @@ namespace ZephyrIt\Shared\Helpers;
 
 use Exception;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\Relation;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
@@ -241,7 +243,7 @@ class ModelHelpers
         try {
             $query = $model::query()->orderByDesc('id');
 
-            if (in_array(\Illuminate\Database\Eloquent\SoftDeletes::class, class_uses_recursive($model))) {
+            if (in_array(SoftDeletes::class, class_uses_recursive($model))) {
                 $query->withTrashed();
             }
 
@@ -326,11 +328,11 @@ class ModelHelpers
 
                             if (
                                 $returnType &&
-                                is_subclass_of((string) $returnType, \Illuminate\Database\Eloquent\Relations\Relation::class)
+                                is_subclass_of((string) $returnType, Relation::class)
                             ) {
                                 $relation = $model->$method();
 
-                                if ($relation instanceof \Illuminate\Database\Eloquent\Relations\Relation) {
+                                if ($relation instanceof Relation) {
                                     $related = $relation->getRelated();
 
                                     $relatedFields = method_exists($related, 'getFillable')
