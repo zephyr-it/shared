@@ -2,7 +2,7 @@
 
 namespace ZephyrIt\Shared\Filament\Components;
 
-use Filament\Forms;
+use Filament\Forms\Components\Select;
 use Filament\Schemas\Components\Utilities\Get;
 use Filament\Schemas\Components\Utilities\Set;
 use ZephyrIt\Shared\Models\City;
@@ -17,7 +17,7 @@ trait HasLocationFields
     protected static function locationCountryFirst(): array
     {
         return [
-            Forms\Components\Select::make('country_id')
+            Select::make('country_id')
                 ->label(__('shared::labels.country'))
                 ->searchable()
                 ->reactive()
@@ -32,7 +32,7 @@ trait HasLocationFields
                 ->getOptionLabelUsing(fn ($value) => Country::find($value)?->name)
                 ->afterStateUpdated(fn (Set $set) => $set('state_id', null)->set('city_id', null)),
 
-            Forms\Components\Select::make('state_id')
+            Select::make('state_id')
                 ->label(__('shared::labels.state'))
                 ->searchable()
                 ->reactive()
@@ -47,7 +47,7 @@ trait HasLocationFields
                 ->getOptionLabelUsing(fn ($value) => State::find($value)?->name)
                 ->afterStateUpdated(fn (Set $set) => $set('city_id', null)),
 
-            Forms\Components\Select::make('city_id')
+            Select::make('city_id')
                 ->label(__('shared::labels.city'))
                 ->searchable()
                 ->required()
@@ -68,7 +68,7 @@ trait HasLocationFields
     protected static function locationCityFirst(): array
     {
         return [
-            Forms\Components\Select::make('city_id')
+            Select::make('city_id')
                 ->label(__('shared::labels.city'))
                 ->searchable()
                 ->reactive()
@@ -101,7 +101,7 @@ trait HasLocationFields
                     }
                 }),
 
-            Forms\Components\Select::make('state_id')
+            Select::make('state_id')
                 ->label(__('shared::labels.state'))
                 ->searchable()
                 ->disabled()
@@ -113,7 +113,7 @@ trait HasLocationFields
                 )
                 ->getOptionLabelUsing(fn ($value) => State::find($value)?->name),
 
-            Forms\Components\Select::make('country_id')
+            Select::make('country_id')
                 ->label(__('shared::labels.country'))
                 ->searchable()
                 ->disabled()

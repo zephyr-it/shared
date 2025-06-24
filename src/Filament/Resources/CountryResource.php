@@ -9,14 +9,19 @@ use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
-use Filament\Forms;
+use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\ToggleButtons;
 use Filament\Resources\Resource;
 use Filament\Schemas\Components\Fieldset;
 use Filament\Schemas\Schema;
-use Filament\Tables;
+use Filament\Tables\Columns\IconColumn;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\SelectFilter;
+use Filament\Tables\Filters\TernaryFilter;
 use Filament\Tables\Table;
 use Malzariey\FilamentDaterangepickerFilter\Filters\DateRangeFilter;
-use ZephyrIt\Shared\Filament\Resources\CountryResource\Pages;
+use ZephyrIt\Shared\Filament\Resources\CountryResource\Pages\ManageCountries;
 use ZephyrIt\Shared\Models\Country;
 
 class CountryResource extends Resource
@@ -48,108 +53,108 @@ class CountryResource extends Resource
             ->components([
                 Fieldset::make(__('shared::labels.fieldset.general_information'))
                     ->schema([
-                        Forms\Components\TextInput::make('name')
+                        TextInput::make('name')
                             ->label(__('shared::labels.name'))
                             ->required()
                             ->maxLength(100),
-                        Forms\Components\TextInput::make('iso3')
+                        TextInput::make('iso3')
                             ->label(__('shared::labels.iso3'))
                             ->maxLength(3)
                             ->default(null),
-                        Forms\Components\TextInput::make('numeric_code')
+                        TextInput::make('numeric_code')
                             ->label(__('shared::labels.numeric_code'))
                             ->maxLength(3)
                             ->default(null),
-                        Forms\Components\TextInput::make('iso2')
+                        TextInput::make('iso2')
                             ->label(__('shared::labels.iso2'))
                             ->maxLength(2)
                             ->default(null),
-                        Forms\Components\TextInput::make('phonecode')
+                        TextInput::make('phonecode')
                             ->label(__('shared::labels.phonecode'))
                             ->tel()
                             ->default(null),
                     ])->columns(2),
                 Fieldset::make(__('shared::labels.fieldset.additional_information'))
                     ->schema([
-                        Forms\Components\TextInput::make('capital')
+                        TextInput::make('capital')
                             ->label(__('shared::labels.capital'))
                             ->default(null),
-                        Forms\Components\TextInput::make('currency')
+                        TextInput::make('currency')
                             ->label(__('shared::labels.currency.title'))
                             ->default(null),
-                        Forms\Components\TextInput::make('currency_name')
+                        TextInput::make('currency_name')
                             ->label(__('shared::labels.currency.name'))
                             ->default(null),
-                        Forms\Components\TextInput::make('currency_symbol')
+                        TextInput::make('currency_symbol')
                             ->label(__('shared::labels.currency.symbol'))
                             ->default(null),
-                        Forms\Components\TextInput::make('tld')
+                        TextInput::make('tld')
                             ->label(__('shared::labels.tld'))
                             ->default(null),
                     ])->columns(2),
                 Fieldset::make(__('shared::labels.fieldset.location_information'))
                     ->schema([
-                        Forms\Components\TextInput::make('native')
+                        TextInput::make('native')
                             ->label(__('shared::labels.native'))
                             ->default(null),
-                        Forms\Components\TextInput::make('region')
+                        TextInput::make('region')
                             ->label(__('shared::labels.region'))
                             ->default(null),
-                        Forms\Components\TextInput::make('region_id')
+                        TextInput::make('region_id')
                             ->label(__('shared::labels.region_id'))
                             ->numeric()
                             ->default(null),
-                        Forms\Components\TextInput::make('subregion')
+                        TextInput::make('subregion')
                             ->label(__('shared::labels.subregion'))
                             ->default(null),
-                        Forms\Components\TextInput::make('subregion_id')
+                        TextInput::make('subregion_id')
                             ->label(__('shared::labels.subregion_id'))
                             ->numeric()
                             ->default(null),
-                        Forms\Components\TextInput::make('nationality')
+                        TextInput::make('nationality')
                             ->label(__('shared::labels.nationality'))
                             ->default(null),
                     ])->columns(2),
                 Fieldset::make(__('shared::labels.fieldset.timezone_information'))
                     ->schema([
-                        Forms\Components\Textarea::make('timezones')
+                        Textarea::make('timezones')
                             ->label(__('shared::labels.timezones'))
                             ->columnSpanFull(),
                     ])->columns(1),
                 Fieldset::make(__('shared::labels.fieldset.translation_information'))
                     ->schema([
-                        Forms\Components\Textarea::make('translations')
+                        Textarea::make('translations')
                             ->label(__('shared::labels.translations'))
                             ->columnSpanFull(),
                     ])->columns(1),
                 Fieldset::make(__('shared::labels.fieldset.geographical_information'))
                     ->schema([
-                        Forms\Components\TextInput::make('latitude')
+                        TextInput::make('latitude')
                             ->label(__('shared::labels.latitude'))
                             ->numeric()
                             ->default(null),
-                        Forms\Components\TextInput::make('longitude')
+                        TextInput::make('longitude')
                             ->label(__('shared::labels.longitude'))
                             ->numeric()
                             ->default(null),
                     ])->columns(2),
                 Fieldset::make(__('shared::labels.fieldset.additional_details'))
                     ->schema([
-                        Forms\Components\TextInput::make('emoji')
+                        TextInput::make('emoji')
                             ->label(__('shared::labels.emoji'))
                             ->maxLength(191)
                             ->default(null),
-                        Forms\Components\TextInput::make('emojiU')
+                        TextInput::make('emojiU')
                             ->label(__('shared::labels.emojiU'))
                             ->maxLength(191)
                             ->default(null),
-                        Forms\Components\ToggleButtons::make('flag')
+                        ToggleButtons::make('flag')
                             ->label(__('shared::labels.flag'))
                             ->boolean()
                             ->grouped()
                             ->default(true)
                             ->required(),
-                        Forms\Components\TextInput::make('wikiDataId')
+                        TextInput::make('wikiDataId')
                             ->label(__('shared::labels.wikiDataId'))
                             ->default(null),
                     ])->columns(2),
@@ -160,82 +165,82 @@ class CountryResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('name')
+                TextColumn::make('name')
                     ->label(__('shared::labels.name'))
                     ->searchable(),
-                Tables\Columns\TextColumn::make('iso3')
+                TextColumn::make('iso3')
                     ->label(__('shared::labels.iso3'))
                     ->searchable(),
-                Tables\Columns\TextColumn::make('numeric_code')
+                TextColumn::make('numeric_code')
                     ->label(__('shared::labels.numeric_code'))
                     ->searchable(),
-                Tables\Columns\TextColumn::make('iso2')
+                TextColumn::make('iso2')
                     ->label(__('shared::labels.iso2'))
                     ->searchable(),
-                Tables\Columns\TextColumn::make('phonecode')
+                TextColumn::make('phonecode')
                     ->label(__('shared::labels.phonecode'))
                     ->searchable(),
-                Tables\Columns\TextColumn::make('capital')
+                TextColumn::make('capital')
                     ->label(__('shared::labels.capital'))
                     ->searchable(),
-                Tables\Columns\TextColumn::make('currency')
+                TextColumn::make('currency')
                     ->label(__('shared::labels.currency.title'))
                     ->searchable(),
-                Tables\Columns\TextColumn::make('currency_name')
+                TextColumn::make('currency_name')
                     ->label(__('shared::labels.currency.name'))
                     ->searchable(),
-                Tables\Columns\TextColumn::make('currency_symbol')
+                TextColumn::make('currency_symbol')
                     ->label(__('shared::labels.currency.symbol'))
                     ->searchable(),
-                Tables\Columns\TextColumn::make('tld')
+                TextColumn::make('tld')
                     ->label(__('shared::labels.tld'))
                     ->searchable(),
-                Tables\Columns\TextColumn::make('native')
+                TextColumn::make('native')
                     ->label(__('shared::labels.native'))
                     ->searchable(),
-                Tables\Columns\TextColumn::make('region')
+                TextColumn::make('region')
                     ->label(__('shared::labels.region'))
                     ->searchable(),
-                Tables\Columns\TextColumn::make('region_id')
+                TextColumn::make('region_id')
                     ->label(__('shared::labels.region_id'))
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('subregion')
+                TextColumn::make('subregion')
                     ->label(__('shared::labels.subregion'))
                     ->searchable(),
-                Tables\Columns\TextColumn::make('subregion_id')
+                TextColumn::make('subregion_id')
                     ->label(__('shared::labels.subregion_id'))
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('nationality')
+                TextColumn::make('nationality')
                     ->label(__('shared::labels.nationality'))
                     ->searchable(),
-                Tables\Columns\TextColumn::make('latitude')
+                TextColumn::make('latitude')
                     ->label(__('shared::labels.latitude'))
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('longitude')
+                TextColumn::make('longitude')
                     ->label(__('shared::labels.longitude'))
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('emoji')
+                TextColumn::make('emoji')
                     ->label(__('shared::labels.emoji'))
                     ->searchable(),
-                Tables\Columns\TextColumn::make('emojiU')
+                TextColumn::make('emojiU')
                     ->label(__('shared::labels.emojiU'))
                     ->searchable(),
-                Tables\Columns\IconColumn::make('flag')
+                IconColumn::make('flag')
                     ->label(__('shared::labels.flag'))
                     ->boolean(),
-                Tables\Columns\TextColumn::make('wikiDataId')
+                TextColumn::make('wikiDataId')
                     ->label(__('shared::labels.wikiDataId'))
                     ->searchable(),
-                Tables\Columns\TextColumn::make('created_at')
+                TextColumn::make('created_at')
                     ->label(__('shared::labels.created_at'))
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updated_at')
+                TextColumn::make('updated_at')
                     ->label(__('shared::labels.updated_at'))
                     ->dateTime()
                     ->sortable()
@@ -244,13 +249,13 @@ class CountryResource extends Resource
             ->filters([
                 DateRangeFilter::make('created_at')
                     ->label(__('shared::labels.created_at')),
-                Tables\Filters\SelectFilter::make('region')
+                SelectFilter::make('region')
                     ->label(__('shared::labels.region'))
                     ->options(Country::query()->pluck('region', 'region')->toArray()),
-                Tables\Filters\SelectFilter::make('subregion')
+                SelectFilter::make('subregion')
                     ->label(__('shared::labels.subregion'))
                     ->options(Country::query()->pluck('subregion', 'subregion')->toArray()),
-                Tables\Filters\TernaryFilter::make('flag')
+                TernaryFilter::make('flag')
                     ->label(__('shared::labels.flag')),
             ])
             ->recordActions([
@@ -267,7 +272,7 @@ class CountryResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ManageCountries::route('/'),
+            'index' => ManageCountries::route('/'),
         ];
     }
 }

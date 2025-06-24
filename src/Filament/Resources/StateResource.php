@@ -9,14 +9,19 @@ use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
-use Filament\Forms;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\ToggleButtons;
 use Filament\Resources\Resource;
 use Filament\Schemas\Components\Fieldset;
 use Filament\Schemas\Schema;
-use Filament\Tables;
+use Filament\Tables\Columns\IconColumn;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\SelectFilter;
+use Filament\Tables\Filters\TernaryFilter;
 use Filament\Tables\Table;
 use Malzariey\FilamentDaterangepickerFilter\Filters\DateRangeFilter;
-use ZephyrIt\Shared\Filament\Resources\StateResource\Pages;
+use ZephyrIt\Shared\Filament\Resources\StateResource\Pages\ManageStates;
 use ZephyrIt\Shared\Models\Country;
 use ZephyrIt\Shared\Models\State;
 
@@ -49,51 +54,51 @@ class StateResource extends Resource
             ->components([
                 Fieldset::make(__('shared::labels.fieldset.general_information'))
                     ->schema([
-                        Forms\Components\TextInput::make('name')
+                        TextInput::make('name')
                             ->label(__('shared::labels.name'))
                             ->required(),
-                        Forms\Components\Select::make('country_id')
+                        Select::make('country_id')
                             ->label(__('shared::labels.country'))
                             ->relationship('country', 'name')
                             ->required(),
-                        Forms\Components\TextInput::make('country_code')
+                        TextInput::make('country_code')
                             ->label(__('shared::labels.country_code'))
                             ->required()
                             ->maxLength(2),
                     ])->columns(2),
                 Fieldset::make(__('shared::labels.fieldset.additional_information'))
                     ->schema([
-                        Forms\Components\TextInput::make('fips_code')
+                        TextInput::make('fips_code')
                             ->label(__('shared::labels.fips_code'))
                             ->default(null),
-                        Forms\Components\TextInput::make('iso2')
+                        TextInput::make('iso2')
                             ->label(__('shared::labels.iso2'))
                             ->default(null),
-                        Forms\Components\TextInput::make('type')
+                        TextInput::make('type')
                             ->label(__('shared::labels.type'))
                             ->maxLength(191)
                             ->default(null),
                     ])->columns(2),
                 Fieldset::make(__('shared::labels.fieldset.geographical_information'))
                     ->schema([
-                        Forms\Components\TextInput::make('latitude')
+                        TextInput::make('latitude')
                             ->label(__('shared::labels.latitude'))
                             ->numeric()
                             ->default(null),
-                        Forms\Components\TextInput::make('longitude')
+                        TextInput::make('longitude')
                             ->label(__('shared::labels.longitude'))
                             ->numeric()
                             ->default(null),
                     ])->columns(2),
                 Fieldset::make(__('shared::labels.fieldset.additional_details'))
                     ->schema([
-                        Forms\Components\ToggleButtons::make('flag')
+                        ToggleButtons::make('flag')
                             ->label(__('shared::labels.flag'))
                             ->boolean()
                             ->grouped()
                             ->default(true)
                             ->required(),
-                        Forms\Components\TextInput::make('wikiDataId')
+                        TextInput::make('wikiDataId')
                             ->label(__('shared::labels.wikiDataId'))
                             ->default(null),
                     ])->columns(2),
@@ -104,44 +109,44 @@ class StateResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('name')
+                TextColumn::make('name')
                     ->label(__('shared::labels.name'))
                     ->searchable(),
-                Tables\Columns\TextColumn::make('country.name')
+                TextColumn::make('country.name')
                     ->label(__('shared::labels.country'))
                     ->sortable(),
-                Tables\Columns\TextColumn::make('country_code')
+                TextColumn::make('country_code')
                     ->label(__('shared::labels.country_code'))
                     ->searchable(),
-                Tables\Columns\TextColumn::make('fips_code')
+                TextColumn::make('fips_code')
                     ->label(__('shared::labels.fips_code'))
                     ->searchable(),
-                Tables\Columns\TextColumn::make('iso2')
+                TextColumn::make('iso2')
                     ->label(__('shared::labels.iso2'))
                     ->searchable(),
-                Tables\Columns\TextColumn::make('type')
+                TextColumn::make('type')
                     ->label(__('shared::labels.type'))
                     ->searchable(),
-                Tables\Columns\TextColumn::make('latitude')
+                TextColumn::make('latitude')
                     ->label(__('shared::labels.latitude'))
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('longitude')
+                TextColumn::make('longitude')
                     ->label(__('shared::labels.longitude'))
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\IconColumn::make('flag')
+                IconColumn::make('flag')
                     ->label(__('shared::labels.flag'))
                     ->boolean(),
-                Tables\Columns\TextColumn::make('wikiDataId')
+                TextColumn::make('wikiDataId')
                     ->label(__('shared::labels.wikiDataId'))
                     ->searchable(),
-                Tables\Columns\TextColumn::make('created_at')
+                TextColumn::make('created_at')
                     ->label(__('shared::labels.created_at'))
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updated_at')
+                TextColumn::make('updated_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
@@ -149,11 +154,11 @@ class StateResource extends Resource
             ->filters([
                 DateRangeFilter::make('created_at')
                     ->label(__('shared::labels.created_at')),
-                Tables\Filters\SelectFilter::make('country_id')
+                SelectFilter::make('country_id')
                     ->label(__('shared::labels.country'))
                     ->options(fn (): array => Country::limit(50)->pluck('name', 'id')->toArray())
                     ->getSearchResultsUsing(fn (string $search): array => Country::where('name', 'like', "%{$search}%")->limit(50)->pluck('name', 'id')->toArray()),
-                Tables\Filters\TernaryFilter::make('flag')
+                TernaryFilter::make('flag')
                     ->label(__('shared::labels.flag')),
             ])
             ->recordActions([
@@ -170,7 +175,7 @@ class StateResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ManageStates::route('/'),
+            'index' => ManageStates::route('/'),
         ];
     }
 }

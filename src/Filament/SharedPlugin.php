@@ -30,11 +30,10 @@ class SharedPlugin implements Plugin
             for: $this->resolveNamespace('Pages'),
         );
 
-        // Optional: for widgets if needed
-        // $panel->discoverWidgets(
-        //     in: $this->resolvePath('Widgets'),
-        //     for: $this->resolveNamespace('Widgets'),
-        // );
+        $panel->discoverWidgets(
+            in: $this->resolvePath('Widgets'),
+            for: $this->resolveNamespace('Widgets'),
+        );
     }
 
     public function boot(Panel $panel): void {}
