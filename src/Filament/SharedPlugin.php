@@ -20,20 +20,29 @@ class SharedPlugin implements Plugin
     {
         $panel->navigationGroups(self::getNavigationGroups());
 
-        $panel->discoverResources(
-            in: $this->resolvePath('Resources'),
-            for: $this->resolveNamespace('Resources'),
-        );
+        $resourcesPath = $this->resolvePath('Resources');
+        if (is_dir($resourcesPath)) {
+            $panel->discoverResources(
+                in: $resourcesPath,
+                for: $this->resolveNamespace('Resources'),
+            );
+        }
 
-        $panel->discoverPages(
-            in: $this->resolvePath('Pages'),
-            for: $this->resolveNamespace('Pages'),
-        );
+        $pagesPath = $this->resolvePath('Pages');
+        if (is_dir($pagesPath)) {
+            $panel->discoverPages(
+                in: $pagesPath,
+                for: $this->resolveNamespace('Pages'),
+            );
+        }
 
-        $panel->discoverWidgets(
-            in: $this->resolvePath('Widgets'),
-            for: $this->resolveNamespace('Widgets'),
-        );
+        $widgetsPath = $this->resolvePath('Widgets');
+        if (is_dir($widgetsPath)) {
+            $panel->discoverWidgets(
+                in: $widgetsPath,
+                for: $this->resolveNamespace('Widgets'),
+            );
+        }
     }
 
     public function boot(Panel $panel): void {}
